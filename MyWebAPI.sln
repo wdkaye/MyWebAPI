@@ -4,8 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyWebAPI", "MyWebAPI\MyWebAPI.csproj", "{692F44D1-CBDB-48D1-8780-A49265477375}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D335AFD-27D4-42FF-89B0-BE929D92E124} = {0D335AFD-27D4-42FF-89B0-BE929D92E124}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModel", "DataModel\DataModel.csproj", "{0D335AFD-27D4-42FF-89B0-BE929D92E124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "DataModel\DataModel.csproj", "{0D335AFD-27D4-42FF-89B0-BE929D92E124}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
