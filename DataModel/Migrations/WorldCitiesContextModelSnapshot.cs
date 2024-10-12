@@ -30,14 +30,6 @@ namespace DataModel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City1")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("char(50)")
-                        .HasColumnName("city")
-                        .IsFixedLength();
-
                     b.Property<int>("CountryId")
                         .HasColumnType("int")
                         .HasColumnName("countryID");
@@ -49,6 +41,13 @@ namespace DataModel.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("float")
                         .HasColumnName("longitude");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("city");
 
                     b.Property<int>("Population")
                         .HasColumnType("int")

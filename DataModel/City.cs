@@ -15,7 +15,7 @@ public partial class City
     [Column("city")]
     [StringLength(50)]
     [Unicode(false)]
-    public string City1 { get; set; } = null!;
+    public string Name { get; set; } = null!;
 
     [Column("latitude")]
     public double Latitude { get; set; }

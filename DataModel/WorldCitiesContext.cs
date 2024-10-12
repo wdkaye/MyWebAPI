@@ -29,8 +29,6 @@ public partial class WorldCitiesContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK_Cities_1");
 
-            entity.Property(e => e.City1).IsFixedLength();
-
             entity.HasOne(d => d.Country).WithMany(p => p.Cities)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Cities_Countries");

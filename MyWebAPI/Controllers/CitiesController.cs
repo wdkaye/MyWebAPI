@@ -6,32 +6,37 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataModel;
+using MyWebAPI.DTO;
 
 namespace MyWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CitiesController : ControllerBase
+    public class CitiesController(WorldCitiesContext context) : ControllerBase
     {
-        private readonly WorldCitiesContext _context;
-
-        public CitiesController(WorldCitiesContext context)
-        {
-            _context = context;
-        }
+        private readonly WorldCitiesContext _context = context;
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities()
+        public async Task<ActionResult<IList<CityDTO>>> GetCities()
         {
-            return await _context.Cities.ToListAsync();
+            IQueryable<CityDTO> x = _context.Cities.Select(c => new CityDTO {
+                Id = c.Id,
+                Name = c.Name,
+                Latitude = c.Latitude,
+                Longitude = c.Longitude,
+                Population = c.Population,
+                CountryName = c.Country.Name
+            }).Take(100);
+
+            return await x.ToListAsync();
         }
 
         // GET: api/Cities/5
         [HttpGet("{id}")]
         public async Task<ActionResult<City>> GetCity(int id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            City? city = await _context.Cities.FindAsync(id);
 
             if (city == null)
             {
@@ -87,7 +92,7 @@ namespace MyWebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(int id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            City? city = await _context.Cities.FindAsync(id);
             if (city == null)
             {
                 return NotFound();
