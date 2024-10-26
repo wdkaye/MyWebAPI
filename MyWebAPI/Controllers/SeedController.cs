@@ -59,8 +59,8 @@ namespace MyWebAPI.Controllers
         [HttpPost("Cities")]
         public async Task<IActionResult> ImportCitiesAsync()
         {
-            Dictionary<string, Country> countries = await db.Countries//.AsNoTracking()
-            .ToDictionaryAsync(c => c.Name);
+            Dictionary<string, Country> countries = await db.Countries //.AsNoTracking()
+                .ToDictionaryAsync(c => c.Name);
 
             CsvConfiguration config = new(CultureInfo.InvariantCulture)
             {
