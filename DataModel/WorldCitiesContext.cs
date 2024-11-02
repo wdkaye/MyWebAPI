@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DataModel;
 
-public partial class WorldCitiesContext : DbContext
+public partial class WorldCitiesContext : IdentityDbContext <AppUser>
 {
     public WorldCitiesContext()
     {
@@ -33,6 +34,7 @@ public partial class WorldCitiesContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<City>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK_Cities_1");

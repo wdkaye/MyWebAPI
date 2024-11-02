@@ -100,5 +100,11 @@ namespace MyWebAPI.Controllers
             }
             return new JsonResult(cityCount);
         }
+
+        [HttpPost("Users")]
+        public async Task<IActionResult> ImportUsersAsync()
+        {
+
+        }
     }
 }
