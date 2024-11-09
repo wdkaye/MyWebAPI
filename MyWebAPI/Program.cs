@@ -13,14 +13,14 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen();  // TODO: replace this line with the new AddSwaggerGen code from Pronto, replacing his info; retest
 
 // This is C# lambda syntax
 builder.Services.AddDbContext<WorldCitiesContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))  
     );
 
-builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<DbContext>();
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<WorldCitiesContext>();
 builder.Services.AddScoped<JwtHandler>();
 
 builder.Services.AddAuthentication(options => {

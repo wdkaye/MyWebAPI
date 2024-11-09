@@ -1,7 +1,9 @@
-﻿using CsvHelper;
+﻿using Azure.Identity;
+using CsvHelper;
 using CsvHelper.Configuration;
 using DataModel;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyWebAPI.Data;
@@ -12,7 +14,8 @@ namespace MyWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SeedController(WorldCitiesContext db, IHostEnvironment environment) : ControllerBase
+    public class SeedController(WorldCitiesContext db, IHostEnvironment environment,
+        UserManager<AppUser> userManager) : ControllerBase
     {
         private readonly string _pathName = Path.Combine(environment.ContentRootPath, "Data/worldcities.csv");
 
@@ -104,7 +107,24 @@ namespace MyWebAPI.Controllers
         [HttpPost("Users")]
         public async Task<IActionResult> ImportUsersAsync()
         {
+            (string name, string email) = ("JohnBarleycorn", "nobody@nope.com");
+            AppUser user = new AppUser()
+            {
+                UserName = name,
+                Email = email,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
+            if( await userManager.FindByEmailAsync(email) is not null )
+            {
+                return Ok(user);
+            }
 
+            // If not found, this will create a user in the database.
+            IdentityResult result = await userManager.CreateAsync(user, "Ab-45678");
+            user.EmailConfirmed = true;
+            user.LockoutEnabled = false;
+            await db.SaveChangesAsync();
+            return Ok(user);
         }
     }
 }
