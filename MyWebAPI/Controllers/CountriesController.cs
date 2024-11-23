@@ -40,6 +40,7 @@ namespace MyWebAPI.Controllers
         }
 
         [HttpGet("countrypopulation/{id}")]
+        [Authorize]        
         public async Task<ActionResult<CountryPopulation>> GetCountryPopulation(int id)  // TODO
         {
             Country? country = await _context.Countries.FindAsync(id);
